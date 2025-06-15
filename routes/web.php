@@ -127,6 +127,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::prefix('bookings')->name('bookings.')->group(function () {
+        Route::get('/list', [AdminBookingController::class, 'index'])->name('index');
+        Route::post('/get_list', [AdminBookingController::class, 'get_list'])->name('get_list');
+        Route::get('/generatePdf', [AdminBookingController::class, 'generatePdf'])->name('generatePdf');
+
         Route::get('/check_in', [AdminBookingController::class, 'check_in'])->name('check_in');
+        Route::post('/get_bookings', [AdminBookingController::class, 'get_bookings'])->name('get_bookings');
+        Route::post('/kh_booking', [AdminBookingController::class, 'kh_booking'])->name('kh_booking');
+        Route::post('/huy_booking', [AdminBookingController::class, 'huy_booking'])->name('huy_booking');
+
+        Route::get('/check_out', [AdminBookingController::class, 'check_out'])->name('check_out');
+        Route::post('/change_room', [AdminBookingController::class, 'change_room'])->name('change_room');
+        Route::post('/get_bookings_checkout', [AdminBookingController::class, 'get_bookings_checkout'])->name('get_bookings_checkout');
+        Route::post('/payment_booking', [AdminBookingController::class, 'payment_booking'])->name('payment_booking');
+        Route::post('/cancel_booking', [AdminBookingController::class, 'cancel_booking'])->name('cancel_booking');
     });
 });

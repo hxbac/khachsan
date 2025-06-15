@@ -62,13 +62,13 @@
                             <div class="collapse show px-3 small mb-1" id="bookingLinks">
                                 <ul class="nav nav-pills flex-column rounded border border-secondary">
                                     <li class="nav-item">
-                                        <a class="nav-link text-white" href="khdatphong.php">Xác Nhận Đặt Phòng</a>
+                                        <a class="nav-link text-white" href="{{ route('admin.bookings.check_in') }}">Xác Nhận Đặt Phòng</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-white" href="new_bookings.php">Xác Nhận Trả Phòng</a>
+                                        <a class="nav-link text-white" href="{{ route('admin.bookings.check_out') }}">Xác Nhận Trả Phòng</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-white" href="booking_records.php">Hồ Sơ Đặt Phòng</a>
+                                        <a class="nav-link text-white" href="{{ route('admin.bookings.index') }}">Hồ Sơ Đặt Phòng</a>
                                     </li>
                                 </ul>
                             </div>

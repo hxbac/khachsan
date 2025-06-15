@@ -1,13 +1,12 @@
 function get_bookings(search = '') {
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", "ajax/khdatphong.php", true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.open("POST", routes.get_bookings + '?search=' + search, true);
 
   xhr.onload = function () {
     document.getElementById('table-data').innerHTML = this.responseText;
   }
 
-  xhr.send('get_bookings&search=' + search);
+  xhr.send();
 }
 
 // function getRoomNumber(roomId) {
@@ -42,7 +41,7 @@ function kh_booking(id,roomNo) {
   }
   if (roomNo!= '') {
     let data = new FormData();
-    
+
     data.append('booking_id', id);
     data.append('room_no', roomNo);
     // data.append('trans_amt', price * totalDay);
@@ -52,7 +51,7 @@ function kh_booking(id,roomNo) {
     data.append('kh_booking', '');
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "ajax/khdatphong.php", true);
+    xhr.open("POST", routes.kh_booking, true);
 
     xhr.onload = function () {
       console.log(this.responseText)
@@ -80,7 +79,7 @@ function huy_booking(id) {
     data.append('huy_booking', '');
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "ajax/khdatphong.php", true);
+    xhr.open("POST", routes.huy_booking, true);
 
     xhr.onload = function () {
       if (this.responseText == 1) {

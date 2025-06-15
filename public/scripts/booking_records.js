@@ -1,16 +1,15 @@
 
 
-function get_bookings(search = '') 
+function get_bookings(search = '')
 {
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", "ajax/booking_records.php", true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.open("POST", routes.get_list + '?search=' + search, true);
 
   xhr.onload = function () {
     document.getElementById('table-data').innerHTML = this.responseText;
   }
 
-  xhr.send('get_bookings&search=' + search);
+  xhr.send();
 }
 
 function change_page(page){
@@ -18,7 +17,7 @@ function change_page(page){
 }
 
 function download(id){
-  window.location.href = 'generate_pdf.php?gen_pdf&id='+id;
+  window.location.href = routes.generatePdf + '?id=' + id;
 }
 
 
