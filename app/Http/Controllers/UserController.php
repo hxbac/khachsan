@@ -10,6 +10,20 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function verify(Request $request) {
+        $user = UserCred::where('token', $request->token)->first();
+        if ($user) {
+            $user->email_verified_at = now();
+            $user->is_verified = 1;
+            $user->token = null;
+            $user->save();
+
+            Auth::loginUsingId($user->id);
+            session()->flash('success', 'Xác thực email thành công!');
+        }
+        return redirect()->route('home.index');
+    }
+
     public function show()
     {
         $user = Auth::user();
@@ -136,5 +150,25 @@ class UserController extends Controller
             });
 
         return view('home.users.bookings', compact('bookings'));
+    }
+
+    public function review(Request $request) {
+        $userId = Auth::id();
+
+        $affected = DB::table('booking_order')
+            ->where('booking_id', $request->booking_id)
+            ->where('user_id', $userId)
+            ->update(['rate_review' => 1]);
+
+        $inserted = DB::table('rating_review')->insert([
+            'booking_id' => $request->booking_id,
+            'room_id'    => $request->room_id,
+            'user_id'    => $userId,
+            'rating'     => $request->rating,
+            'review'     => $request->review,
+        ]);
+
+        session()->flash('success', 'Cảm ơn bạn đã đánh giá!');
+        return response()->json(1);
     }
 }

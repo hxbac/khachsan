@@ -31,8 +31,8 @@
 <body class="bg-light">
 
     <div class="container-fluid bg-dark text-light p-3 d-flex align-items-center justify-content-between sticky-top">
-        <h3 class="mb-0 h-font">Mường Thanh Hotel</h3>
-        <a href="logout.php" class="btn btn-light btn-sm">Đăng Xuất</a>
+        <a href="{{ route('home.index') }}" style="text-decoration: none"><h3 class="mb-0 h-font">Mường Thanh Hotel</h3></a>
+        <a href="{{ route('admin.index') }}" class="btn btn-light btn-sm">Đăng Xuất</a>
     </div>
 
     <div class="col-lg-2 bg-dark border-top border-3 border-secondary" id="dashboard-menu">
@@ -80,7 +80,7 @@
                             <a class="nav-link text-white" href="{{ route('admin.usersQuery.index') }}">Phản Hồi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="rate_review.php">Đánh Giá</a>
+                            <a class="nav-link text-white" href="{{ route('admin.reviews.index') }}">Đánh Giá</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('admin.roomSettings.index') }}">Loại Phòng</a>

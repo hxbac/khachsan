@@ -138,7 +138,7 @@
             @endforeach
 
             <div class="col-lg-12 text-center mt-5">
-                <a href="rooms.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">Xem Thêm >>></a>
+                <a href="{{ route('rooms.index') }}" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">Xem Thêm >>></a>
             </div>
         </div>
     </div>
@@ -157,7 +157,7 @@
             @endforeach
 
             <div class="col-lg-12 text-center mt-5">
-                <a href="facilities.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">Xem thêm >>></a>
+                <a href="{{ route('home.facilities') }}" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">Xem thêm >>></a>
             </div>
         </div>
     </div>
@@ -191,7 +191,7 @@
             <div class="swiper-pagination"></div>
         </div>
         <div class="col-lg-12 text-center mt-5">
-            <a href="about.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">Xem thêm >>></a>
+            <a href="{{ route('home.about') }}" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">Xem thêm >>></a>
         </div>
     </div>
 

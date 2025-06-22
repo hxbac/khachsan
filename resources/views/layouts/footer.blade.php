@@ -103,7 +103,6 @@
 
         var myModal = document.getElementById('registerModal');
         var modal = bootstrap.Modal.getInstance(myModal);
-        modal.hide();
 
         let xhr = new XMLHttpRequest();
         xhr.open("POST", "{{ route('ajax.register') }}", true);
@@ -124,9 +123,10 @@
             } else if (this.responseText == 'ins_failed') {
                 alert('error', "Đăng ký không thành công! Máy chủ ngừng hoạt động!");
             } else {
-                alert('success', "Đăng ký thành công!");
+                alert('success', "Đăng ký thành công, mã xác minh đã gửi về email của bạn!");
                 register_form.reset();
             }
+            modal.hide();
         }
 
         xhr.send(data);

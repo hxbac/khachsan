@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\CarouselController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeaturesFacilitiesController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\RoomController as AdminRoomController;
 use App\Http\Controllers\Admin\RoomSettingController;
 use App\Http\Controllers\Admin\SettingController;
@@ -27,12 +28,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/auth/verify-email', [UserController::class, 'verify'])->name('user.verify');
+
 Route::prefix('my')->middleware('auth')->group(function () {
     Route::get('/', [UserController::class, 'show'])->name('user.show');
     Route::post('/', [UserController::class, 'update'])->name('user.update');
     Route::post('/avatar', [UserController::class, 'updateAvatar'])->name('user.updateAvatar');
     Route::post('/password', [UserController::class, 'changePassword'])->name('user.changePassword');
     Route::get('/bookings', [UserController::class, 'bookings'])->name('user.bookings');
+    Route::post('/review', [UserController::class, 'review'])->name('user.review');
 });
 
 Route::prefix('ajax')->group(function () {
@@ -55,10 +59,9 @@ Route::post('/pay-now', [BookingController::class, 'payNow'])->name('booking.pay
 Route::post('/cancel-booking', [BookingController::class, 'cancel'])->name('booking.cancel');
 
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['web'])->group(function () {
     Route::get('/', [DashboardController::class, 'login'])->name('index');
     Route::post('/login', [DashboardController::class, 'handleLogin'])->name('login');
-
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::prefix('rooms')->name('rooms.')->group(function () {
@@ -91,7 +94,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/search', [AdminUserController::class, 'search'])->name('search');
     });
 
-    Route::prefix('usersQuery')->name('usersQuery.')->group(function () {
+    Route::prefix('feedback')->name('usersQuery.')->group(function () {
         Route::get('/', [UserQueryController::class, 'index'])->name('index');
         Route::get('/seen', [UserQueryController::class, 'seen'])->name('seen');
         Route::get('/delete', [UserQueryController::class, 'delete'])->name('delete');
@@ -141,5 +144,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/get_bookings_checkout', [AdminBookingController::class, 'get_bookings_checkout'])->name('get_bookings_checkout');
         Route::post('/payment_booking', [AdminBookingController::class, 'payment_booking'])->name('payment_booking');
         Route::post('/cancel_booking', [AdminBookingController::class, 'cancel_booking'])->name('cancel_booking');
+    });
+
+    Route::prefix('reviews')->name('reviews.')->group(function () {
+        Route::get('/', [ReviewController::class, 'index'])->name('index');
+        Route::get('/seen', [ReviewController::class, 'seen'])->name('seen');
+        Route::get('/delete', [ReviewController::class, 'delete'])->name('delete');
     });
 });

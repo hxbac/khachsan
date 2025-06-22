@@ -84,7 +84,6 @@ class HomeController extends Controller
         ]);
 
         if ($res) {
-            // Ví dụ bạn có thể dùng session flash để alert
             session()->flash('success', 'Mail sent!');
         } else {
             session()->flash('error', 'Server Down! Try again later.');

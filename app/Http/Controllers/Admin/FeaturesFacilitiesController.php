@@ -52,7 +52,7 @@ class FeaturesFacilitiesController extends Controller
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
 
             $stored = $file->move(public_path('images/facilities'), $filename);
-            $path = $stored ? 'images/facilities/' . $filename : null;
+            $path = $stored ? $filename : null;
         }
 
         if (!$path) {

@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerifyEmail as MailVerifyEmail;
 use App\Models\Setting;
 use App\Models\UserCred;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Str;
+use VerifyEmail;
 
 class AjaxController extends Controller
 {
@@ -169,6 +173,7 @@ class AjaxController extends Controller
             return 'inv_img';
         }
 
+        $token = Str::random(64);
         // Tạo người dùng
         $user = new UserCred();
         $user->name        = $data['name'];
@@ -179,12 +184,35 @@ class AjaxController extends Controller
         $user->dob         = $data['dob'];
         $user->profile     = $profilePath;
         $user->password    = Hash::make($data['pass']);
+        $user->token       = $token;
 
         if ($user->save()) {
+            if ($this->isMailConfigured()) {
+                $verificationUrl = route('user.verify', ['token' => $token]);
+                Mail::to($user->email)->send(new MailVerifyEmail($user, $verificationUrl));
+            } else {
+                $user->email_verified_at = now();
+                $user->is_verified = 1;
+                $user->token = null;
+                $user->save();
+            }
+
             return 1;
         }
 
         return 'ins_failed';
+    }
+
+    function isMailConfigured() {
+        $mailer    = config('mail.default');
+        $mailers   = config("mail.mailers.$mailer");
+
+        return !empty($mailer)
+            && !empty($mailers['transport'])
+            && !empty($mailers['host'])
+            && !empty($mailers['port'])
+            && !empty($mailers['username'])
+            && !empty($mailers['password']);
     }
 
     public function login(Request $request)

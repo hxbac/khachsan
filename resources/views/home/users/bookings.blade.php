@@ -93,13 +93,18 @@
 
 
 
-    <?php
-    if (isset($_GET['cancel_status'])) {
-        alert('success', 'Đặt phòng đã bị hủy!');
-    } elseif (isset($_GET['review_status'])) {
-        alert('success', 'Cảm ơn bạn đã đánh giá!');
-    }
-    ?>
+    @if (session('success') || session('error'))
+        @php
+            $type = session('success') ? 'success' : 'error';
+            $msg = session($type);
+            $bs_class = $type == 'success' ? 'alert-success' : 'alert-danger';
+        @endphp
+
+        <div class="alert {{ $bs_class }} alert-dismissible fade show custom-alert" role="alert">
+            <strong class="me-3">{{ $msg }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <script>
         function cancel_booking(id) {
@@ -141,12 +146,12 @@
             data.append('room_id', review_form.elements['room_id'].value);
 
             let xhr = new XMLHttpRequest();
-            xhr.open("POST", "ajax/review_room.php", true);
+            xhr.open("POST", "{{ route('user.review') }}", true);
 
             xhr.onload = function() {
 
                 if (this.responseText == 1) {
-                    window.location.href = 'bookings.php?review_status=true';
+                    window.location.href = '{{ route('user.bookings') }}?review_status=true';
                 } else {
                     var myModal = document.getElementById('reviewModal');
                     var modal = bootstrap.Modal.getInstance(myModal);

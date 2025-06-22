@@ -3,7 +3,7 @@
 @foreach($facilities as $facility)
 <tr class="align-middle">
   <td>{{ $i++ }}</td>
-  <td><img src="{{ asset($facility->icon) }}" width="100px" alt="icon"></td>
+  <td><img src="{{ asset('images/facilities/' . $facility->icon) }}" width="100px" alt="icon"></td>
   <td>{{ $facility->name }}</td>
   <td>{{ $facility->description }}</td>
   <td>
